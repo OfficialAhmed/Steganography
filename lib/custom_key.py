@@ -72,6 +72,7 @@ class Key:
         """
         now = datetime.datetime.now()
         timestamp = now.strftime("%m_%d %H_%M_%S")
+
         with open(f"{timestamp}.key", "wb") as file:
 
             aes = self.get_user_password()
@@ -84,6 +85,7 @@ class Key:
             Decrypt key AES and return the plainText
         """
         with open(f'{key_file_name}.key', 'r') as file:
+
             encrypted_text = file.read()
             aes = self.get_user_password()
             decrypted_text = aes.decrypt(encrypted_text)
@@ -91,12 +93,11 @@ class Key:
             if decrypted_text:
                 self.set_decrypted_key(decrypted_text)
                 return decrypted_text
-            else:
-                return "UNABLE TO RETRIEVE MESSAGE!"
+            
+        return "UNABLE TO RETRIEVE MESSAGE!"
 
 
     def get_user_password(self) -> AES:
-
         pswd = input("Enter a password of length 16: ")
 
         if self.is_password_safe(pswd):
