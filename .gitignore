@@ -1,2 +1,4 @@
 env
-.key
+assets
+*.key
+*.pyc
