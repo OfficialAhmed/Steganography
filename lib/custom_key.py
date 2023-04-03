@@ -100,10 +100,11 @@ class Key:
     def get_user_password(self) -> AES:
         pswd = input("Enter a password of length 16: ")
 
-        if self.is_password_safe(pswd):
-            return AES(pswd)
-        
-        pswd = input("Cannot use password. Please enter a password of length 16: ")
+        while True:
+            if self.is_password_safe(pswd):
+                return AES(pswd)
+            
+            pswd = input("Cannot use password. Please enter a password of length 16: ")
 
 
     def is_password_safe(self, password: str) -> bool:
