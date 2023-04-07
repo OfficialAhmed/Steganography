@@ -156,6 +156,18 @@ button[type="submit"] {
     margin: 6px 0px 6px 0px;
 }
 
+.image-preview {
+    margin-top: 1rem;
+    max-width: 100%;
+    height: auto;
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+}
+
+
 @keyframes fadeEffect {
     from {
         opacity: 0;

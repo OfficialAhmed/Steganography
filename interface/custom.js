@@ -1,20 +1,84 @@
-function encode_text(){
-    alert("Encoding text...");
+function is_input_valid(msg, img, pswd, key) {
+    // Check all user inputs before trying to encode or decode
+
+    var err = ''
+    if (msg.length >= 1) {
+        if (pswd.length == 16) {
+            if (img) {
+                if (key) {
+                    Swal.fire(
+                        'PLEASE WAIT!',
+                        'Encoding in progress...',
+                        'success'
+                    )
+                    return True
+                } else
+                    err = 'Key cannot be empty'
+            } else
+                err = 'image cannot be empty'
+        } else
+            err = 'password must be a length of 16'
+    } else
+        err = 'text cannot be empty!'
+
+    Swal.fire(
+        'INVALID INPUT!',
+        err,
+        'error'
+    )
+    return false;
 }
 
-function decode_text(){
-    alert("Decoding text...");
+function encode_text() {
+    let img = document.getElementById('text_encode_input').value
+    let password = document.getElementById('text_encode_pass').value
+    let message = document.getElementById('text_encode_message').value
+
+    if (is_input_valid(message, img, password, 'pass')) {
+        // encode message through eel Python
+    }
+
 }
 
-function encode_image(){
+function decode_text() {
+    let key = document.getElementById('text_decode_key').value
+    let img = document.getElementById('text_decode_input').value
+    let password = document.getElementById('text_decode_pass').value
+    let message = document.getElementById('text_decode_message').value
+
+    if (is_input_valid(message, img, password, key)) {
+        // encode message through eel Python
+    }
+}
+
+function encode_image() {
     alert("Encoding image...");
 }
 
-function decode_image(){
+function decode_image() {
     alert("Decoding image...");
 }
 
 
+function preview_image(input, output) {
+    const imageInput = document.getElementById(input);
+    const imagePreview = document.getElementById(output);
+
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.addEventListener('load', function () {
+                imagePreview.innerHTML = `<img src="${this.result}" alt="Image Preview">`;
+            });
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+}
 
 function type_writter() {
     // Generated query code to animate the title

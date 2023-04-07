@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <script src="custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+
     <title>Stegnography (GUtech)</title>
 </head>
 
@@ -41,18 +44,19 @@
                             <div class="tab-contents">
                                 <div role="tabpanel" id="text_encode_tab" aria-labelledby="text_encode_tab_id" hidden class="tab-content">
                                     <div class="row" id="text_encode_box"> 
+                                        
                                         <div class="col">
-                                            <div id="preview-2"></div>
-                                            <input type="file" id="image" name="image" />
+                                            <input type="file" id="text_encode_input" accept="image/*" oninput="preview_image('text_encode_input', 'text_encode_preview')">
+                                            <div id="text_encode_preview" class="image-preview"></div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="text" id="i5vorh">Text:</label>
-                                                <input type="text" id="text" name="text" placeholder="Enter text..." />
+                                                <input type="text" id="text_encode_message" name="text" placeholder="Enter text..." />
                                             </div>
                                             <div class="form-group">
-                                                <label for="password" id="iqmg0y">Password [16 characters]:</label>
-                                                <input type="password" id="password" name="password" placeholder="Enter password..." />
+                                                <label>Password [16 characters]:</label>
+                                                <input type="password" id="text_encode_pass" maxlength="16" placeholder="Enter password..." />
                                             </div>
                                             <div class="form-group"></div>
                                             <button id="i2zglh" onclick="encode_text()">ENCODE</button>
@@ -63,19 +67,20 @@
                                 <div role="tabpanel" id="text_decode_tab" aria-labelledby="text_decode_tab_id" hidden class="tab-content">
                                     <div class="row" id="ikisvc">
                                         <div class="col">
-                                            <div></div><input type="file" name="image" id="ij77qo" placeholder="" />
+                                            <input type="file" id="text_decode_input" accept="image/*" oninput="preview_image('text_decode_input', 'text_decode_preview')">
+                                            <div id="text_decode_preview" class="image-preview"></div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="text">Text:</label>
-                                                <input type="text" name="text" placeholder="Enter text..." />
+                                                <input type="text" id="text_decode_message" name="text" placeholder="Enter text..." />
                                             </div>
                                             <div class="form-group">
-                                                <label for="password">Password:</label>
-                                                <input type="password" name="password" placeholder="Enter password..." />
+                                                <label for="password">Password [16 characters]:</label>
+                                                <input type="password" name="password" id="text_decode_pass" maxlength="16" placeholder="Enter password..." />
                                             </div>
                                             <div class="form-group">
-                                                <label for="file" id="ip1s6h">Key [.bin]:</label>
+                                                <label for="file" id="text_decode_key">Key [.bin]:</label>
                                                 <input type="file" name="file" accept=".bin" />
                                             </div>
                                             <button onclick="decode_text()" id="i9w8gf">DECODE</button>
@@ -108,7 +113,8 @@
                                 <div role="tabpanel" id="ifua2w" aria-labelledby="it5gc3" hidden class="tab-content">
                                     <div class="row" id="ibd19h">
                                         <div class="col">
-                                            <input type="file" name="image" />
+                                            <input type="file" id="image_encode_input" accept="image/*" oninput="preview_image('image_encode_input', 'image_encode_preview')">
+                                            <div id="image_encode_preview" class="image-preview"></div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
@@ -130,7 +136,9 @@
                                 <div role="tabpanel" id="iepu9z" aria-labelledby="i9blxa" hidden class="tab-content">
                                     <div class="row" id="i6xo56">
                                         <div class="col">
-                                            <input type="file" name="image" />
+                                            <!-- <input type="file" name="image" /> -->
+                                            <input type="file" id="image_decode_input" accept="image/*" oninput="preview_image('image_decode_input', 'image_decode_preview')">
+                                            <div id="image_decode_preview" class="image-preview"></div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
@@ -156,7 +164,7 @@
                     <section class="bdg-sect">
                         <p class="paragraph" id="copyright">2023 © Ahmed Al Riyami - Nasser Al Wahaibi</p>
                     </section>
-                    
+
                 </div>
             </div>
         </div>
