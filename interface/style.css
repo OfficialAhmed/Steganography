@@ -1,0 +1,167 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+:root {
+    --primary-color: #3f51b5;
+    --secondary-color: #f1f1f1;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.col {
+    flex-basis: 45%;
+    max-width: 45%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    transition: background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="file"]:focus {
+    background-color: #e8e8e8;
+}
+
+button[type="submit"] {
+    display: block;
+}
+
+#im48 {
+    background-repeat: repeat;
+    background-position: left top;
+    background-attachment: scroll;
+    background-size: cover;
+    background-image: url('img/bg.png')
+}
+
+.tab {
+    padding: 7px 14px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.tab:focus {
+    outline: none;
+}
+
+.tab.tab-active {
+    background-color: #0d94e6;
+    color: white;
+}
+
+.tab-container {
+    display: inline-block;
+}
+
+.tab-content {
+    animation: fadeEffect 1s;
+}
+
+.tab-contents {
+    min-height: 100px;
+    padding: 10px;
+}
+
+#text_encode_box {
+    box-shadow: 0px 0px 30px 5px rgba(17, 17, 17, 0.46);
+}
+
+#ikisvc {
+    box-shadow: 0 0 30px 5px rgba(17, 17, 17, 0.46);
+}
+
+#ibd19h {
+    box-shadow: 0 0 30px 5px rgba(17, 17, 17, 0.46);
+}
+
+#i6xo56 {
+    box-shadow: 0 0 30px 5px rgba(17, 17, 17, 0.46);
+}
+
+#copyright {
+    text-align: center;
+    color: white;
+}
+
+#idfrai {
+    text-align: center;
+    color: #fbfbfb;
+}
+
+#title_type {
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px 5px black;
+    font-size: 55px;
+    opacity: 1;
+    margin: 6px 0px 6px 0px;
+}
+
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

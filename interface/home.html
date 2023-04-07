@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="custom.js"></script>
+    <title>Stegnography (GUtech)</title>
+</head>
+
+<body>
+    <body id="im48">
+        <div id="title_type"></div>
+        <div class="container">
+            <div id="ipss3h">
+                <div role="tablist" class="tab-container" id="ismb56">
+                    <div role="tab" aria-controls="text_tab" id="text_tab_id" class="tab">Text</div>
+                    <div role="tab" aria-controls="image_tab" id="image_tab_id" class="tab">Image</div>
+                </div>
+                <div class="tab-contents" id="i4mzor">
+
+                    <!-- 
+
+                        ##########################################################
+                                        Text tab starts here
+                        ##########################################################
+
+                     -->
+                    <div role="tabpanel" id="text_tab" aria-labelledby="text_tab_id" hidden class="tab-content">
+                        <div id="iy8t4q">
+                            
+                            <div role="tablist" class="tab-container">
+                                <div role="tab" aria-controls="text_encode_tab" id="text_encode_tab_id" class="tab">
+                                    <span>Encode</span>
+                                </div>
+                                <div role="tab" aria-controls="text_decode_tab" id="text_decode_tab_id" class="tab">
+                                    <span>Decode</span>
+                                </div>
+                            </div>
+
+                            <div class="tab-contents">
+                                <div role="tabpanel" id="text_encode_tab" aria-labelledby="text_encode_tab_id" hidden class="tab-content">
+                                    <div class="row" id="text_encode_box"> 
+                                        <div class="col">
+                                            <div id="preview-2"></div>
+                                            <input type="file" id="image" name="image" />
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="text" id="i5vorh">Text:</label>
+                                                <input type="text" id="text" name="text" placeholder="Enter text..." />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password" id="iqmg0y">Password [16 characters]:</label>
+                                                <input type="password" id="password" name="password" placeholder="Enter password..." />
+                                            </div>
+                                            <div class="form-group"></div>
+                                            <button id="i2zglh" onclick="encode_text()">ENCODE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div role="tabpanel" id="text_decode_tab" aria-labelledby="text_decode_tab_id" hidden class="tab-content">
+                                    <div class="row" id="ikisvc">
+                                        <div class="col">
+                                            <div></div><input type="file" name="image" id="ij77qo" placeholder="" />
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="text">Text:</label>
+                                                <input type="text" name="text" placeholder="Enter text..." />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password:</label>
+                                                <input type="password" name="password" placeholder="Enter password..." />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="file" id="ip1s6h">Key [.bin]:</label>
+                                                <input type="file" name="file" accept=".bin" />
+                                            </div>
+                                            <button onclick="decode_text()" id="i9w8gf">DECODE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 
+
+                        ##########################################################
+                                        Image tab starts here
+                        ##########################################################
+
+                     -->
+                    <div role="tabpanel" id="image_tab" aria-labelledby="image_tab_id" hidden class="tab-content">
+                        <div id="ibj7j1">
+                            <div role="tablist" class="tab-container">
+                                <div role="tab" aria-controls="ifua2w" id="it5gc3" class="tab">
+                                    <span id="i3d33l">Encode</span>
+                                </div>
+                                <div role="tab" aria-controls="iepu9z" id="i9blxa" class="tab">
+                                    <span id="irblsd">Decode</span>
+                                </div>
+                            </div>
+                            <div class="tab-contents">
+                                <div role="tabpanel" id="ifua2w" aria-labelledby="it5gc3" hidden class="tab-content">
+                                    <div class="row" id="ibd19h">
+                                        <div class="col">
+                                            <input type="file" name="image" />
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="text">Text:</label>
+                                                <input type="text" name="text" placeholder="Enter text..." />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password:</label>
+                                                <input type="password" name="password" placeholder="Enter password..." />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="file">File (.bin format only):</label>
+                                                <input type="file" name="file" accept=".bin" />
+                                            </div>
+                                            <button onclick="encode_image()">ENCODE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" id="iepu9z" aria-labelledby="i9blxa" hidden class="tab-content">
+                                    <div class="row" id="i6xo56">
+                                        <div class="col">
+                                            <input type="file" name="image" />
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="text">Text:</label>
+                                                <input type="text" name="text" placeholder="Enter text..." />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password:</label>
+                                                <input type="password" name="password" placeholder="Enter password..." />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="file">File (.bin format only):</label>
+                                                <input type="file" name="file" accept=".bin" />
+                                            </div>
+                                            <button onclick="decode_image()">DECODE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="bdg-sect">
+                        <p class="paragraph" id="copyright">2023 © Ahmed Al Riyami - Nasser Al Wahaibi</p>
+                    </section>
+                    
+                </div>
+            </div>
+        </div>
+    </body>
+</body>
+
+</html>

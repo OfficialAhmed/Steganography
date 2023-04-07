@@ -73,10 +73,11 @@ class Key:
         now = datetime.datetime.now()
         timestamp = now.strftime("%m_%d %H_%M_%S")
 
-        with open(f"{timestamp}.key", "wb") as file:
+        with open(f"{timestamp}.bin", "wb") as file:
 
             aes = self.get_user_password()
             encrypted_text = aes.encrypt(self.get_secret_key())
+            print(encrypted_text)
             file.write(encrypted_text.encode())
     
 
@@ -84,9 +85,9 @@ class Key:
         """
             Decrypt key AES and return the plainText
         """
-        with open(f'{key_file_name}.key', 'r') as file:
+        with open(f'{key_file_name}.bin', 'rb') as file:
 
-            encrypted_text = file.read()
+            encrypted_text = file.read().decode()
             aes = self.get_user_password()
             decrypted_text = aes.decrypt(encrypted_text)
 
