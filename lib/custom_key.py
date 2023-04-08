@@ -66,7 +66,7 @@ class Key:
         return "".join([f"{secrets.randbelow(245) + 10}_" for _ in range(key_length)]) + str(self.get_pixel_distance())
 
 
-    def store_secret_key(self) -> bool:
+    def store_secret_key(self, pswd: str) -> bool:
         """
             Encrypt key with (PBE) AES algo. then save it as .key extension
         """
@@ -75,20 +75,20 @@ class Key:
 
         with open(f"{timestamp}.bin", "wb") as file:
 
-            aes = self.get_user_password()
+            aes = AES(pswd)
             encrypted_text = aes.encrypt(self.get_secret_key())
             print(encrypted_text)
             file.write(encrypted_text.encode())
     
 
-    def get_key_from_file(self, key_file_name: str) -> str:
+    def get_key_from_file(self, key_file_name: str, pswd: str) -> str:
         """
             Decrypt key AES and return the plainText
         """
         with open(f'{key_file_name}.bin', 'rb') as file:
 
             encrypted_text = file.read().decode()
-            aes = self.get_user_password()
+            aes = AES(pswd)
             decrypted_text = aes.decrypt(encrypted_text)
 
             if decrypted_text:
@@ -96,25 +96,3 @@ class Key:
                 return decrypted_text
             
         return "UNABLE TO RETRIEVE MESSAGE!"
-
-
-    def get_user_password(self) -> AES:
-        pswd = input("Enter a password of length 16: ")
-
-        while True:
-            if self.is_password_safe(pswd):
-                return AES(pswd)
-            
-            pswd = input("Cannot use password. Please enter a password of length 16: ")
-
-
-    def is_password_safe(self, password: str) -> bool:
-        """
-            Password checks:
-            To avoid common exploits like buffer overflow 
-            by making sure the password is safe before using it 
-        """
-
-        if len(password) == 16:
-            return True
-        return False

@@ -1,5 +1,5 @@
 function is_input_valid(msg, img, pswd, key) {
-    // Check all user inputs before trying to encode or decode
+    // Check all user inputs before encode/decode
 
     var err = ''
     if (msg.length >= 1) {
@@ -11,7 +11,7 @@ function is_input_valid(msg, img, pswd, key) {
                         'Encoding in progress...',
                         'success'
                     )
-                    return True
+                    return true
                 } else
                     err = 'Key cannot be empty'
             } else
@@ -29,25 +29,53 @@ function is_input_valid(msg, img, pswd, key) {
     return false;
 }
 
-function encode_text() {
-    let img = document.getElementById('text_encode_input').value
-    let password = document.getElementById('text_encode_pass').value
-    let message = document.getElementById('text_encode_message').value
+async function encode_text() {
+    let img = document.getElementById('text_encode_input').value;
+    let password = document.getElementById('text_encode_pass').value;
+    let message = document.getElementById('text_encode_message').value;
 
-    if (is_input_valid(message, img, password, 'pass')) {
-        // encode message through eel Python
+    if (is_input_valid(message, img, password, 'pass') == true) {
+        let is_encoded = await eel.encode(message, img, password)()
+
+        if (is_encoded) {
+            Swal.fire(
+                'ENCODED SUCCESSFULLY!',
+                "Image generated",
+                'success'
+            )
+        } else {
+            Swal.fire(
+                'UNSUCCESSFULL!',
+                is_encoded,
+                'error'
+            )
+        }
     }
 
 }
 
-function decode_text() {
+async function decode_text() {
     let key = document.getElementById('text_decode_key').value
     let img = document.getElementById('text_decode_input').value
     let password = document.getElementById('text_decode_pass').value
     let message = document.getElementById('text_decode_message').value
 
     if (is_input_valid(message, img, password, key)) {
-        // encode message through eel Python
+        let is_decoded = await eel.decode(message, img)()
+
+        if (is_decoded) {
+            Swal.fire(
+                'DECODED SUCCESSFULLY!',
+                is_decoded,
+                'success'
+            )
+        } else {
+            Swal.fire(
+                'UNSUCCESSFULL!',
+                "unknown issue",
+                'error'
+            )
+        }
     }
 }
 

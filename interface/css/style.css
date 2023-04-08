@@ -89,7 +89,7 @@ button[type="submit"] {
     background-position: left top;
     background-attachment: scroll;
     background-size: cover;
-    background-image: url('img/bg.png')
+    background-image: url('../img/bg.png')
 }
 
 .tab {

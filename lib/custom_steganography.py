@@ -101,8 +101,8 @@ class TextIntoImage(Key):
         return True if self.read_text(normalized_image) == ciphered_text else False
 
 
-    def decode(self, image_path: str, key_file_name: str) -> str:
-        decoded_key = self.get_key_from_file(key_file_name).split("_")
+    def decode(self, image_path: str, key_file_name: str, pswd: str) -> str:
+        decoded_key = self.get_key_from_file(key_file_name, pswd).split("_")
         self.set_pixel_distance(int(decoded_key[-1]))
         return self.read_text(image_path)
 

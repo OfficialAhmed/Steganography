@@ -1,4 +1,7 @@
 env
+myenv
 assets
 *.key
 *.pyc
+*.bin
+__pycache__
