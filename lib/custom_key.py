@@ -77,7 +77,6 @@ class Key:
 
             aes = AES(pswd)
             encrypted_text = aes.encrypt(self.get_secret_key())
-            print(encrypted_text)
             file.write(encrypted_text.encode())
     
 

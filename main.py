@@ -1,15 +1,31 @@
 # FIXME: Need to retrieve image path to use it, the name is not enough.
 
-import eel
+import eel, os
+from tkinter import filedialog, Tk
 from lib import custom_steganography, custom_cipher, custom_key
-from time import perf_counter
 
 steg = custom_steganography.TextIntoImage()
 cipher = custom_cipher.SubstitutionCipher()
 eel.init('interface')
 
 @eel.expose
-def encode(text: str, input_image: str, user_enc_pswd: str):
+def get_image() -> str|None:
+    root = Tk()
+    root.withdraw()
+    root.wm_attributes('-topmost', 1)
+    image = filedialog.askopenfilename(parent = root,
+        initialdir = os.getcwd(),
+        title = "CHOOSE IMAGE TO ENCODE THE MESSAGE INTO...",
+        filetypes = (
+            ("images","*.png"),
+            ("all files","*.*")
+        )
+    )
+    return image if image else None
+
+
+@eel.expose
+def encode(text: str, image: str, user_enc_pswd: str):
     global steg, cipher
 
     output_image = "output_image.png"
@@ -18,10 +34,8 @@ def encode(text: str, input_image: str, user_enc_pswd: str):
 
     encrypted = cipher.substitution_cipher_enc(text, user_enc_pswd)
 
-    # t1 = perf_counter()
-    # print(f"Finished Encoding in {perf_counter()-t1}")
     print("encoding ...")
-    return steg.encode(input_image, output_image, encrypted)
+    return steg.encode(image, output_image, encrypted)
 
 
 @eel.expose

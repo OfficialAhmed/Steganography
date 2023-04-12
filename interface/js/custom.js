@@ -1,21 +1,13 @@
-function is_input_valid(msg, img, pswd, key) {
+function is_input_valid(msg, pswd, key) {
     // Check all user inputs before encode/decode
 
     var err = ''
     if (msg.length >= 1) {
         if (pswd.length == 16) {
-            if (img) {
-                if (key) {
-                    Swal.fire(
-                        'PLEASE WAIT!',
-                        'Encoding in progress...',
-                        'success'
-                    )
-                    return true
-                } else
-                    err = 'Key cannot be empty'
+            if (key) {
+                return true
             } else
-                err = 'image cannot be empty'
+                err = 'Key cannot be empty'
         } else
             err = 'password must be a length of 16'
     } else
@@ -29,30 +21,44 @@ function is_input_valid(msg, img, pswd, key) {
     return false;
 }
 
+
 async function encode_text() {
-    let img = document.getElementById('text_encode_input').value;
-    let password = document.getElementById('text_encode_pass').value;
-    let message = document.getElementById('text_encode_message').value;
+    const password = document.getElementById('text_encode_pass').value;
+    const message = document.getElementById('text_encode_message').value;
 
-    if (is_input_valid(message, img, password, 'pass') == true) {
-        let is_encoded = await eel.encode(message, img, password)()
+    if (is_input_valid(message, password, 'pass') == true) {
+        const image = await eel.get_image()()
+        if (image) {
 
-        if (is_encoded) {
             Swal.fire(
-                'ENCODED SUCCESSFULLY!',
-                "Image generated",
-                'success'
+                'ENCODING...',
+                "Please wait, message being encoded",
+                'info'
             )
-        } else {
+
+            let is_encoded = await eel.encode(message, image, password)()
+            if (is_encoded) {
+                Swal.fire(
+                    'ENCODED SUCCESSFULLY!',
+                    "Image generated",
+                    'success'
+                )
+            } else
+                Swal.fire(
+                    'UNSUCCESSFULL!',
+                    is_encoded,
+                    'error'
+                )
+
+        } else
             Swal.fire(
-                'UNSUCCESSFULL!',
-                is_encoded,
+                'IMAGE CANNOT BE EMPTY!',
+                'Pick an image to encode the message',
                 'error'
             )
-        }
     }
-
 }
+
 
 async function decode_text() {
     let key = document.getElementById('text_decode_key').value
@@ -87,26 +93,6 @@ function decode_image() {
     alert("Decoding image...");
 }
 
-
-function preview_image(input, output) {
-    const imageInput = document.getElementById(input);
-    const imagePreview = document.getElementById(output);
-
-    imageInput.addEventListener('change', function () {
-        const file = this.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.addEventListener('load', function () {
-                imagePreview.innerHTML = `<img src="${this.result}" alt="Image Preview">`;
-            });
-
-            reader.readAsDataURL(file);
-        }
-    });
-
-}
 
 function type_writter() {
     // Generated query code to animate the title
