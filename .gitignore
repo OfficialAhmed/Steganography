@@ -4,4 +4,5 @@ assets
 *.key
 *.pyc
 *.bin
+*.png
 __pycache__

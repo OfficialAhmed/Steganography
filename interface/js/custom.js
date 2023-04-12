@@ -27,7 +27,7 @@ async function encode_text() {
     const message = document.getElementById('text_encode_message').value;
 
     if (is_input_valid(message, password, 'pass') == true) {
-        const image = await eel.get_image()()
+        const image = await eel.get_file('image')()
         if (image) {
 
             Swal.fire(
@@ -59,30 +59,53 @@ async function encode_text() {
     }
 }
 
+async function get_key(){
+    document.getElementById('key_path_id').value = await eel.get_file('key')()
+}
 
 async function decode_text() {
-    let key = document.getElementById('text_decode_key').value
-    let img = document.getElementById('text_decode_input').value
-    let password = document.getElementById('text_decode_pass').value
+    const key = document.getElementById('key_path_id').value
+    const password = document.getElementById('text_decode_pass').value
     let message = document.getElementById('text_decode_message').value
 
-    if (is_input_valid(message, img, password, key)) {
-        let is_decoded = await eel.decode(message, img)()
+    if (is_input_valid("pass", password, key)) {
+        const image = await eel.get_file('image')()
 
-        if (is_decoded) {
+        if (image) {
+
             Swal.fire(
-                'DECODED SUCCESSFULLY!',
-                is_decoded,
-                'success'
+                'DECODING...',
+                "Please wait, message being decoded",
+                'info'
             )
-        } else {
+
+            let decoded = await eel.decode(image, key, password)()
+
+            if (!decoded.includes('UNABLE') ) {
+                Swal.fire(
+                    'DECODED SUCCESSFULLY!',
+                    decoded,
+                    'success'
+                )
+                message.value = decoded
+            } else {
+                Swal.fire(
+                    'UNSUCCESSFULL!',
+                    decoded,
+                    'error'
+                )
+            }
+
+        } else
             Swal.fire(
-                'UNSUCCESSFULL!',
-                "unknown issue",
+                'IMAGE CANNOT BE EMPTY!',
+                'Pick an image to decode the message',
                 'error'
             )
-        }
+
+
     }
+
 }
 
 function encode_image() {

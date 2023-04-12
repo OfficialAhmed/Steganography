@@ -1,5 +1,3 @@
-# FIXME: Need to retrieve image path to use it, the name is not enough.
-
 import eel, os
 from tkinter import filedialog, Tk
 from lib import custom_steganography, custom_cipher, custom_key
@@ -9,19 +7,23 @@ cipher = custom_cipher.SubstitutionCipher()
 eel.init('interface')
 
 @eel.expose
-def get_image() -> str|None:
+def get_file(file_type) -> str|None:
+    if file_type == "key":
+        file_types = [("Binary files", "*.bin")]
+
+    elif file_type == "image":
+        file_types = [("Image files", "*.jpg;*.jpeg;*.png")]
+
+
     root = Tk()
     root.withdraw()
     root.wm_attributes('-topmost', 1)
-    image = filedialog.askopenfilename(parent = root,
+    file = filedialog.askopenfilename(parent = root,
         initialdir = os.getcwd(),
-        title = "CHOOSE IMAGE TO ENCODE THE MESSAGE INTO...",
-        filetypes = (
-            ("images","*.png"),
-            ("all files","*.*")
-        )
+        title = f"CHOOSE {file_type.upper()} TO ENCODE|DECODE THE MESSAGE...",
+        filetypes = file_types
     )
-    return image if image else None
+    return file if file else None
 
 
 @eel.expose
@@ -34,59 +36,24 @@ def encode(text: str, image: str, user_enc_pswd: str):
 
     encrypted = cipher.substitution_cipher_enc(text, user_enc_pswd)
 
-    print("encoding ...")
     return steg.encode(image, output_image, encrypted)
 
 
 @eel.expose
-def decode(img: str, key: str):
+def decode(img: str, key: str, pswd: str) -> str:
     global steg, cipher
 
     print("Decoding ...")
     try:
-        text_from_image = steg.decode(img, key)
+        text_from_image = steg.decode(img, key, pswd)
         if text_from_image:
             hex_value = eval(text_from_image)
             return f"SECRET MESSAGE: {cipher.substitution_cipher_dec(hex_value)}"
         else:
-            print("UNABLE TO FIND MESSAGE!")
+            print("done ...")
+            return "UNABLE TO FIND MESSAGE!"
     except Exception as e:
-        print(f"UNABLE TO DECRYPT MESSAGE!: {e}")
-
-# def mn() -> None:
-#     algo_type = input("e or d: ")
-#     steg = custom_steganography.TextIntoImage()
-#     cipher = custom_cipher.SubstitutionCipher()
-
-#     if algo_type == "e":
-#         # encode 
-#         input_image = "assets\\cover_image.png"
-#         output_image = "assets\\output_image.png"
-#         text = input("Enter secret Msg: ")
-
-#         print("Encrypting...")
-#         encrypted = cipher.substitution_cipher_enc(text)
-
-#         print("Encoding...")
-#         t1 = perf_counter()
-#         steg.encode(input_image, output_image, encrypted)
-#         print(f"Finished Encoding in {perf_counter()-t1}")
-
-    
-#     else:
-#         # decode
-#         input_image = "assets\\output_image.png"
-#         key_name = input("enter the key file name [without extension]: ")
-
-#         print("Decoding ...")
-#         try:
-#             text_from_image = steg.decode(input_image, key_name)
-#             if text_from_image:
-#                 hex_value = eval(text_from_image)
-#                 print(f"SECRET MESSAGE: {cipher.substitution_cipher_dec(hex_value)}")
-#             else:
-#                 print("UNABLE TO FIND MESSAGE!")
-#         except Exception as e:
-#             print(f"UNABLE TO DECRYPT MESSAGE!: {e}")
+        print("done ...")
+        return f"UNABLE TO DECRYPT MESSAGE!: {e}"
 
 eel.start('index.html')

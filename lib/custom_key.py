@@ -84,7 +84,7 @@ class Key:
         """
             Decrypt key AES and return the plainText
         """
-        with open(f'{key_file_name}.bin', 'rb') as file:
+        with open(f'{key_file_name}', 'rb') as file:
 
             encrypted_text = file.read().decode()
             aes = AES(pswd)
