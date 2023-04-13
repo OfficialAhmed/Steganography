@@ -5,4 +5,5 @@ assets
 *.pyc
 *.bin
 *.png
+*.jpg
 __pycache__

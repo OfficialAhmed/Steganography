@@ -95,10 +95,10 @@ class TextIntoImage(Key):
     
 
     def encode(self, input_image: str, normalized_image: str, ciphered_text: str) -> bool:
-        self.normalize_and_hide(input_image, normalized_image, ciphered_text)
+        result = self.normalize_and_hide(input_image, normalized_image, ciphered_text)
 
         # If all went good, encoded msg must = ciphered msg
-        return True if self.read_text(normalized_image) == ciphered_text else False
+        return True if result else False
 
 
     def decode(self, image_path: str, key_file_name: str, pswd: str) -> str:
@@ -146,8 +146,15 @@ class TextIntoImage(Key):
                     r, g, b = self.normalize_pixel(r, g, b)
 
                 new_img.putpixel((row, column), (r, g, b))
+                
+        bits_left_to_encode = len(hex_offset) - len(altered_pixels)
+        
+        if bits_left_to_encode == 0:
+            new_img.save(output_path, "PNG", optimize=True)
+            return True
+        return False
 
-        new_img.save(output_path, "PNG", optimize=True)
+    
 
 
 class ImageIntoImage:

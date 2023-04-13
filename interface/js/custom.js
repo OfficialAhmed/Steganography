@@ -36,17 +36,17 @@ async function encode_text() {
                 'info'
             )
 
-            let is_encoded = await eel.encode(message, image, password)()
-            if (is_encoded) {
+            let encoding_result = await eel.encode(message, image, password)()
+            if (encoding_result[0]) {
                 Swal.fire(
                     'ENCODED SUCCESSFULLY!',
-                    "Image generated",
+                    encoding_result[1],
                     'success'
                 )
             } else
                 Swal.fire(
                     'UNSUCCESSFULL!',
-                    is_encoded,
+                    encoding_result[1],
                     'error'
                 )
 
@@ -66,7 +66,7 @@ async function get_key(){
 async function decode_text() {
     const key = document.getElementById('key_path_id').value
     const password = document.getElementById('text_decode_pass').value
-    let message = document.getElementById('text_decode_message').value
+    const message = document.getElementById('text_decode_message')
 
     if (is_input_valid("pass", password, key)) {
         const image = await eel.get_file('image')()
@@ -87,7 +87,9 @@ async function decode_text() {
                     decoded,
                     'success'
                 )
+
                 message.value = decoded
+
             } else {
                 Swal.fire(
                     'UNSUCCESSFULL!',

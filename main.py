@@ -27,16 +27,22 @@ def get_file(file_type) -> str|None:
 
 
 @eel.expose
-def encode(text: str, image: str, user_enc_pswd: str):
-    global steg, cipher
+def encode(text: str, image: str, user_enc_pswd: str) -> tuple:
+    try:
+        global steg, cipher
 
-    output_image = "output_image.png"
-    key = custom_key.Key()
-    key.set_globals()
+        output_image = "output_image.png"
+        key = custom_key.Key()
+        key.set_globals()
 
-    encrypted = cipher.substitution_cipher_enc(text, user_enc_pswd)
+        encrypted = cipher.substitution_cipher_enc(text, user_enc_pswd)
 
-    return steg.encode(image, output_image, encrypted)
+        if steg.encode(image, output_image, encrypted):
+            return (True, 'IMAGE GENERATED AS "output_image.png"')
+        return (False, 'MESSAGE IS TOO LONG FOR THE IMAGE')
+
+    except Exception as e:
+        return (False, str(e))
 
 
 @eel.expose
