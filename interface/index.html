@@ -58,7 +58,7 @@
                                                     placeholder="Enter password..." />
                                             </div>
                                             <div class="form-group"></div>
-                                            <button id="i2zglh" onclick="encode_text()">ENCODE</button>
+                                            <button class="modern-button" id="i2zglh" onclick="encode_text()">ENCODE</button>
                                         </div>
                                     </div>
                                 </div>
@@ -71,13 +71,14 @@
                                             <div class="form-group">
                                                 <label for="password">Password [16 characters]:</label>
                                                 <input type="password" name="password" id="text_decode_pass"
-                                                    maxlength="16" placeholder="Enter password..." />
+                                                maxlength="16" placeholder="Enter password..." />
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" id="key_path_id" readonly hidden="true"/>
-                                                <button onclick="get_key()">BROWSE KEY</button>
+                                                <label for="password">Key [.bin]:</label>
+                                                <input onclick="get_key()" type="text" id="key_path_id" readonly hidden="true" placeholder="Click to browse...">
+                                                <!-- <button onclick="get_key()">BROWSE KEY</button> -->
                                             </div>
-                                            <button onclick="decode_text()" id="i9w8gf">DECODE</button>
+                                            <button class="modern-button" onclick="decode_text()" id="i9w8gf">DECODE</button>
                                             <div class="form-group">
                                                 <input type="text" id="text_decode_message"
                                                     placeholder="OUTPUT: awaiting decode..." readonly>

@@ -38,7 +38,7 @@ def encode(text: str, image: str, user_enc_pswd: str) -> tuple:
         encrypted = cipher.substitution_cipher_enc(text, user_enc_pswd)
 
         if steg.encode(image, output_image, encrypted):
-            return (True, 'IMAGE GENERATED AS "output_image.png"')
+            return (True, f'IMAGE GENERATED AS "{output_image}"')
         return (False, 'MESSAGE IS TOO LONG FOR THE IMAGE')
 
     except Exception as e:

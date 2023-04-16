@@ -6,4 +6,5 @@ assets
 *.bin
 *.png
 *.jpg
+test.py
 __pycache__
