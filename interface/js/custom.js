@@ -1,4 +1,6 @@
-function is_input_valid(msg, pswd, key) {
+// ############        Text to image        ########################
+
+function is_text_into_image_input_valid(msg, pswd, key) {
     // Check all user inputs before encode/decode
 
     var err = ''
@@ -26,8 +28,10 @@ async function encode_text() {
     const password = document.getElementById('text_encode_pass').value;
     const message = document.getElementById('text_encode_message').value;
 
-    if (is_input_valid(message, password, 'pass') == true) {
+    if (is_text_into_image_input_valid(message, password, 'pass') == true) {
+
         const image = await eel.get_file('image')()
+
         if (image) {
 
             Swal.fire(
@@ -36,7 +40,7 @@ async function encode_text() {
                 'info'
             )
 
-            let encoding_result = await eel.encode(message, image, password)()
+            let encoding_result = await eel.encode_text(message, image, password)()
             if (encoding_result[0]) {
                 Swal.fire(
                     'ENCODED SUCCESSFULLY!',
@@ -68,7 +72,7 @@ async function decode_text() {
     const password = document.getElementById('text_decode_pass').value
     const message = document.getElementById('text_decode_message')
 
-    if (is_input_valid("pass", password, key)) {
+    if (is_text_into_image_input_valid("pass", password, key)) {
         const image = await eel.get_file('image')()
 
         if (image) {
@@ -79,7 +83,7 @@ async function decode_text() {
                 'info'
             )
 
-            let decoded = await eel.decode(image, key, password)()
+            let decoded = await eel.decode_text(image, key, password)()
 
             if (!decoded.includes('UNABLE')) {
                 Swal.fire(
@@ -105,22 +109,123 @@ async function decode_text() {
                 'error'
             )
 
-
     }
 
 }
 
-function encode_image() {
-    alert("Encoding image...");
+
+// ############        Image to image        ########################
+
+function is_image_into_image_input_valid(cover, secret, compression) {
+
+    var err = ''
+    if (cover) {
+        if (secret) {
+            if (compression) {
+                return true
+            } else
+                err = 'Key cannot be empty'
+        } else
+            err = 'secret image cannot be empty!'
+    } else
+        err = 'Cover image cannot be empty!'
+
+    Swal.fire(
+        'INVALID INPUT!',
+        err,
+        'error'
+    )
+
+    return false;
 }
 
-function decode_image() {
-    alert("Decoding image...");
+async function get_image_path(type){
+    // Store image path into the corresponding label tag
+
+    const path = await eel.get_file('image')()
+
+    var id = 'secret_image_path'
+
+    if (type == 'cover')
+        id = 'cover_image_path'
+        
+    else if(type == "cover_secret")
+        id = 'cover_and_secret_image_path'
+    
+    document.getElementById(id).innerHTML = path
+}
+
+async function encode_image() {
+
+    const cover_image = document.getElementById('cover_image_path').innerHTML
+    const secret_image = document.getElementById('secret_image_path').innerHTML
+    const compression_ratio = document.getElementById('compression').value
+    
+    if (is_image_into_image_input_valid(cover_image, secret_image, compression_ratio)){
+        
+        Swal.fire(
+            'ENCODING STARTED...',
+            "Please wait a moment",
+            'success'
+        )
+
+        respons = await eel.encode_image(cover_image, secret_image, compression_ratio)()
+        
+        if (respons[0]){
+            Swal.fire(
+                'ENCODED SUCCESSFULLY',
+                "Image generated",
+                'success'
+            )
+            
+            return true
+
+        }else{
+            Swal.fire(
+                'ENCODING UNSUCCESSFUL',
+                "OPS!. " + respons[1],
+                'error'
+            )
+        }
+
+        return false
+    }
+}
+
+async function decode_image() {
+
+    const image = document.getElementById('cover_and_secret_image').value
+
+    if (image){
+        
+        respons = await eel.decode_image(image)()
+        if (respons[0])
+            Swal.fire(
+                'SUCCESSFULLY DECODED',
+                "image decoded inside folder assets/image2image",
+                'success'
+            )
+            
+        else
+            Swal.fire(
+                'UNABLE TO DECODE',
+                respons[1],
+                'error'
+            )
+
+    }else{
+        Swal.fire(
+            'INVALID INPUT!',
+            "Pick an image to decode",
+            'error'
+        )
+    }
 }
 
 
 function type_writter() {
-    // Generated query code to animate the title
+    // Generated query code to animate the title for design
+
     var items = document.querySelectorAll('#title_type');
     for (var i = 0, len = items.length; i < len; i++) {
         (function () {

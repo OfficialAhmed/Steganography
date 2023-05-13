@@ -1,6 +1,5 @@
 env
 myenv
-assets
 *.key
 *.pyc
 *.bin
@@ -8,3 +7,4 @@ assets
 *.jpg
 test.py
 __pycache__
+test

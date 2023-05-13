@@ -5,11 +5,14 @@ class SubstitutionCipher(Key):
         Polyalphabetic Substitution Cipher Encryption-Decryption using a key of different shifting number for each letter
         limit: length no more than 1-byte or 255-bits ascii
     """
+    
     def __init__(self) -> None:
+
         pass
 
 
     def substitution_cipher_dec(self, message: str) -> str:
+
         result = ""
         key_index = 0
 
@@ -29,10 +32,12 @@ class SubstitutionCipher(Key):
 
             result += char
             key_index = (key_index + 1) % len(key)
+
         return repr(result)
 
 
     def substitution_cipher_enc(self, message: str, pswd: str) -> str:
+
         result = ""
         key_index = 0
         key = self.get_secret_key().split("_")[:-1]
@@ -48,5 +53,6 @@ class SubstitutionCipher(Key):
             key_index = (key_index + 1) % len(key)
 
         self.store_secret_key(pswd)
+
         return repr(result)
     

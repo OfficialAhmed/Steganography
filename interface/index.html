@@ -47,6 +47,13 @@
                                     class="tab-content">
                                     <div class="row" id="text_encode_box">
                                         <div class="col">
+
+                                            <!--
+
+                                                User encoding inputs here 
+
+                                            -->
+
                                             <div class="form-group">
                                                 <label for="text" id="i5vorh">Text:</label>
                                                 <input type="text" id="text_encode_message" name="text"
@@ -66,7 +73,11 @@
                                 <div role="tabpanel" id="text_decode_tab" aria-labelledby="text_decode_tab_id" hidden
                                     class="tab-content">
                                     <div class="row" id="ikisvc">
+                                            <!--
 
+                                                User decoding inputs here 
+
+                                            -->
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="password">Password [16 characters]:</label>
@@ -111,52 +122,58 @@
                             <div class="tab-contents">
                                 <div role="tabpanel" id="ifua2w" aria-labelledby="it5gc3" hidden class="tab-content">
                                     <div class="row" id="ibd19h">
-                                        <!-- <div class="col">
-                                            <input type="file" id="image_encode_input" accept="image/*"
-                                                oninput="preview_image('image_encode_input', 'image_encode_preview')">
-                                            <div id="image_encode_preview" class="image-preview"></div>
-                                        </div> -->
                                         <div class="col">
+                                            <!-- 
+
+                                                user encode inputs down here
+
+                                             -->
                                             <div class="form-group">
-                                                <label for="text">Text:</label>
-                                                <input type="text" name="text" placeholder="Enter text..." />
+                                                <label>Cover Image:</label>
+                                                <label id="cover_image_path"></label>
+                                                <button id="cover_image" onclick="get_image_path('cover')">Choose...</button>
                                             </div>
+                                            
                                             <div class="form-group">
-                                                <label for="password">Password:</label>
-                                                <input type="password" name="password"
-                                                    placeholder="Enter password..." />
+                                                <label>Secret Image:</label>
+                                                <label id="secret_image_path"></label>
+                                                <button id="secret_image" onclick="get_image_path('secret')">Choose...</button>
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="file">File (.bin format only):</label>
-                                                <input type="file" name="file" accept=".bin" />
+                                                <label>Compression:</label>
+                                                <select id="compression">
+                                                    <option value="100" selected>100 %</option>
+                                                    <option value="75">75 %</option>
+                                                    <option value="50">50 %</option>
+                                                    <option value="25">25 %</option>
+                                                    <option value="10">10 %</option>
+                                                </select>
                                             </div>
+
                                             <button onclick="encode_image()">ENCODE</button>
+
                                         </div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="iepu9z" aria-labelledby="i9blxa" hidden class="tab-content">
                                     <div class="row" id="i6xo56">
+                                        <!-- 
+
+                                            user decode inputs down here
+
+                                        -->
+                                         
                                         <div class="col">
-                                            <!-- <input type="file" name="image" /> -->
-                                            <input type="file" id="image_decode_input" accept="image/*"
-                                                oninput="preview_image('image_decode_input', 'image_decode_preview')">
-                                            <div id="image_decode_preview" class="image-preview"></div>
-                                        </div>
-                                        <div class="col">
+
                                             <div class="form-group">
-                                                <label for="text">Text:</label>
-                                                <input type="text" name="text" placeholder="Enter text..." />
+                                                <label>Cover Image:</label>
+                                                <label id="cover_and_secret_image_path"></label>
+                                                <button id="cover_and_secret_image" onclick="get_image_path('cover_secret')">Choose...</button>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="password">Password:</label>
-                                                <input type="password" name="password"
-                                                    placeholder="Enter password..." />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="file">File (.bin format only):</label>
-                                                <input type="file" name="file" accept=".bin" />
-                                            </div>
+
                                             <button onclick="decode_image()">DECODE</button>
+
                                         </div>
                                     </div>
                                 </div>

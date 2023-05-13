@@ -1,7 +1,7 @@
-import binascii
+import os, cv2, binascii
+import numpy as np
 from PIL import Image
 from numpy import random
-
 from lib.custom_key import Key
 
 class TextIntoImage(Key):
@@ -158,9 +158,157 @@ class TextIntoImage(Key):
 
 
 class ImageIntoImage:
-    """
-        Nasser Code is here
-    """
-    pass
+
+    def __init__(self) -> None:
+		
+        self.temp_location = "assets\\image2image\\"
+
+        self.ENCODED_NAME = f'{self.temp_location}encoded_image.jpg'
+        self.DECODED_COVER = f'{self.temp_location}decoded_cover.jpg'
+        self.DECODED_HIDDEN = f'{self.temp_location}decoded_hidden.jpg'
+
+        self.COMPRESS_COVER_OUTPUT = f'{self.temp_location}cover_compressed.jpg'
+        self.COMPRESS_HIDDEN_OUTPUT = f'{self.temp_location}hidden_compressed.jpg'
+
+        self.cover_width = 0
+        self.cover_height = 0
+        self.compression_in_fraction = None
+
+
+    def set_compression(self, compression: int):
+        self.compression_in_fraction = compression / 100
+
+
+    def compress_cover_image(self, cover):	
+		# Reduce cover image size and creates one image: compressed cover image
+
+        SIZE_1 = 1034	
+        SIZE_2 = 900	
+        SIZE_3 = 700	
+        SIZE_4 = 500	
+        SIZE_5 = 250	
+
+        pic = Image.open(cover)
+        width, height = pic.size
+
+		
+        if self.compression_in_fraction == 1:
+
+            if width > 1000 and height > 1000:
+
+                new_width = SIZE_1
+                new_height = int(height * (SIZE_1 / width))
+
+            elif( width  >= 1000 or height >= 1000):  
+
+                new_width = SIZE_2
+                new_height = int(height * (SIZE_2 / width)) 
+
+            elif(500 < width < 1000 and 500 < height < 1000 ) or (500 < width < 1000 or 500 < height < 1000 ) :
+
+                new_width = SIZE_3
+                new_height = int(height * (SIZE_3 / width))
+
+            elif(250 <= width <=500 and 250 <= height <=500 ) or (250 <= width <=500 or 250 <= height <=500 ) :
+
+                new_width = SIZE_4
+                new_height = int(height * (SIZE_4 / width))
+
+            else:
+
+                new_width = SIZE_5
+                new_height = int(height * (SIZE_5 / width))
+
+        else:
+
+            new_width = int(width * self.compression_in_fraction)
+            new_height = int(height * self.compression_in_fraction)
+
+        self.cover_width = new_width
+        self.cover_height = new_height
+
+        pic = pic.resize((new_width, new_height), Image.ANTIALIAS)
+        pic.save(self.COMPRESS_COVER_OUTPUT)
+		
+
+    def compress_hidden_image(self, image):
+		# Compress and greyscale the hidden image
+
+        hidden_image = Image.open(image)
+
+        # hidden image will be resized using the cover dimensions
+        hidden_image = hidden_image.resize((self.cover_width, self.cover_height), Image.ANTIALIAS)
+        hidden_image = hidden_image.convert('L')
+        hidden_image.save(self.COMPRESS_HIDDEN_OUTPUT)
+
+
+    def encrypt(self) -> bool:
+
+        cover = cv2.imread(self.COMPRESS_COVER_OUTPUT)
+        hidden = cv2.imread(self.COMPRESS_HIDDEN_OUTPUT)
+
+        # Generate a random sequence of pixel positions
+        positions = [(i, j) for i in range(hidden.shape[0]) for j in range(hidden.shape[1])]
+        random.shuffle(positions)
+
+        for idx, (i, j) in enumerate(positions):
+            for l in range(3):
+                v1 = format(cover[i][j][l], '08b')
+                v2 = format(hidden[i][j][l], '08b')
+                v3 = v1[:4] + v2[:4]
+                cover[i][j][l] = int(v3, 2)
+
+                # Check if we have embedded all the hidden data
+                if idx == hidden.shape[0] * hidden.shape[1] - 1:
+                    break
+
+            if idx == hidden.shape[0] * hidden.shape[1] - 1:
+                break
+
+        return cv2.imwrite(self.ENCODED_NAME, cover)
+			
+
+    def decrypt(self, image_to_decode) -> bool:		
+
+        image = cv2.imread(image_to_decode)
+        width, height = image.shape[0], image.shape[1]
+        cover = np.zeros((width, height, 3), np.uint8)
+        hidden = np.zeros((width, height, 3), np.uint8)
+
+        # Generate the same random sequence of pixel positions
+        positions = [(i, j) for i in range(hidden.shape[0]) for j in range(hidden.shape[1])]
+        random.shuffle(positions)
+
+        for idx, (i, j) in enumerate(positions):
+            for l in range(3):
+                v1 = format(image[i][j][l], '08b')
+                v2 = v1[:4] + chr(random.randint(0, 1) + 48) * 4
+                v3 = v1[4:] + chr(random.randint(0, 1) + 48) * 4
+                cover[i][j][l] = int(v2, 2)
+                hidden[i][j][l] = int(v3, 2)
+
+                # Check if we have extracted all the hidden data
+                if idx == hidden.shape[0] * hidden.shape[1] - 1:
+                    break
+
+            if idx == hidden.shape[0] * hidden.shape[1] - 1:
+                break
+        
+        if cv2.imwrite(self.DECODED_COVER, cover) and cv2.imwrite(self.DECODED_HIDDEN, hidden):
+            return True
+        return False
+        
+
+    def delete_temp_images(self):
+        #  Remove all temp images generated during the encoding process 
+        temp = ( self.COMPRESS_COVER_OUTPUT, self.COMPRESS_HIDDEN_OUTPUT )
+
+        try:
+            for i in temp:
+                os.remove(i)
+        except Exception as e:
+            # If cannot remove ignore it
+            pass
+            
 
 
