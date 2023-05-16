@@ -194,10 +194,17 @@ async function encode_image() {
 
 async function decode_image() {
 
-    const image = document.getElementById('cover_and_secret_image').value
+    const image = document.getElementById('cover_and_secret_image_path').innerHTML
+    console.log(image)
 
     if (image){
         
+        Swal.fire(
+            'DECODING STARTED',
+            "Please wait a moment...",
+            'success'
+        )
+
         respons = await eel.decode_image(image)()
         if (respons[0])
             Swal.fire(
