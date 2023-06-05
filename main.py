@@ -59,13 +59,12 @@ def encode_text(text: str, image: str, user_enc_pswd: str) -> tuple:
     except Exception as e:
         return (False, str(e))
 
-
+chr()
 @eel.expose
 def decode_text(img: str, key: str, pswd: str) -> str:
 
     global text_into_image_steg, cipher
 
-    print("Decoding ...")
     try:
 
         text_from_image = text_into_image_steg.decode(img, key, pswd)
@@ -77,13 +76,9 @@ def decode_text(img: str, key: str, pswd: str) -> str:
         
         else:
 
-            print("done ...")
-
             return "UNABLE TO FIND MESSAGE!"
         
     except Exception as e:
-
-        print("done ...")
 
         return f"UNABLE TO DECRYPT MESSAGE!: {e}"
 
@@ -92,7 +87,6 @@ def decode_text(img: str, key: str, pswd: str) -> str:
 def encode_image(cover, secret, compression_ration):
 
     try:
-        print("encoding...")
 
         image_into_image_steg.set_compression(int(compression_ration))
         image_into_image_steg.compress_cover_image(cover)

@@ -35,7 +35,7 @@ async function encode_text() {
         if (image) {
 
             Swal.fire(
-                'ENCODING...',
+                'ENCODING...',  
                 "Please wait, message being encoded",
                 'info'
             )
