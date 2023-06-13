@@ -37,7 +37,6 @@ def get_file(file_type) -> str|None:
 
     return file if file else None
 
-
 @eel.expose
 def encode_text(text: str, image: str, user_enc_pswd: str) -> tuple:
 
@@ -59,7 +58,6 @@ def encode_text(text: str, image: str, user_enc_pswd: str) -> tuple:
     except Exception as e:
         return (False, str(e))
 
-chr()
 @eel.expose
 def decode_text(img: str, key: str, pswd: str) -> str:
 
@@ -82,7 +80,6 @@ def decode_text(img: str, key: str, pswd: str) -> str:
 
         return f"UNABLE TO DECRYPT MESSAGE!: {e}"
 
-
 @eel.expose
 def encode_image(cover, secret, compression_ration):
 
@@ -98,7 +95,6 @@ def encode_image(cover, secret, compression_ration):
     
     except Exception as e:
         return (False, str(e))
-
 
 @eel.expose
 def decode_image(image):

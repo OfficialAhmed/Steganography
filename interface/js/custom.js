@@ -23,7 +23,6 @@ function is_text_into_image_input_valid(msg, pswd, key) {
     return false;
 }
 
-
 async function encode_text() {
     const password = document.getElementById('text_encode_pass').value;
     const message = document.getElementById('text_encode_message').value;
